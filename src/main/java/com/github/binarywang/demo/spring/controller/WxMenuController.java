@@ -50,6 +50,8 @@ public class WxMenuController implements WxMpMenuService {
         button1.setType(WxConsts.BUTTON_CLICK);
         button1.setName("今日歌曲");
         button1.setKey("V1001_TODAY_MUSIC");
+        
+        System.out.print("****** JOSH ******");
 
 //        WxMenuButton button2 = new WxMenuButton();
 //        button2.setType(WxConsts.BUTTON_MINIPROGRAM);
