@@ -1,5 +1,7 @@
 package com.github.binarywang.demo.spring.handler;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,9 +38,17 @@ public class MsgHandler extends AbstractHandler {
         //当用户输入关键词如“你好”，“客服”等，并且有客服在线时，把消息转发给在线客服
         if (StringUtils.startsWithAny(wxMessage.getContent(), "你好", "客服")
             && weixinService.hasKefuOnline()) {
+        	
             return WxMpXmlOutMessage
                 .TRANSFER_CUSTOMER_SERVICE().fromUser(wxMessage.getToUser())
                 .toUser(wxMessage.getFromUser()).build();
+            
+        }else if("模板消息".equalsIgnoreCase(wxMessage.getContent())){
+        	
+        	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+        	String time = sdf.format(new Date());
+        	
+        	System.out.println("模板消息 " + time);
         }
 
         //TODO 组装回复消息
