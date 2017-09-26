@@ -10,6 +10,23 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
+  
+  <!-- new add by Josh at 20170926 begin -->
+  <servlet>
+    <servlet-name>initServlet</servlet-name>
+    <servlet-class>com.shtd.josh.servlet.InitServlet</servlet-class>
+    <init-param>
+      <param-name>appid</param-name>
+      <param-value>wx7872670352c05f96</param-value>
+    </init-param>
+    <init-param>
+      <param-name>appsecret</param-name>
+      <param-value>f639a5eaae6dfce60f129a31b2868c1b</param-value>
+    </init-param>
+    <load-on-startup>0</load-on-startup>
+  </servlet>  
+  <!-- new add by Josh at 20170926 begin -->
+  
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -45,4 +62,18 @@
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
+  
+  <!-- new add by Josh at 20170926 begin -->
+  <!--  
+  <servlet>
+    <servlet-name>oauthServlet</servlet-name>
+    <servlet-class>org.liufeng.course.servlet.OAuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>oauthServlet</servlet-name>
+    <url-pattern>/oauthServlet</url-pattern>
+  </servlet-mapping>
+  -->
+  <!-- new add by Josh at 20170926 end -->
+    
 </web-app>

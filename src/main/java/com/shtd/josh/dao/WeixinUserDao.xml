@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shtd.josh.dao.WeixinUserDao">
+  <resultMap id="BaseResultMap" type="com.shtd.josh.domain.WeixinUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="loginname" property="loginname" jdbcType="VARCHAR" />
+    <result column="weixin_open_id" property="weixinOpenId" jdbcType="VARCHAR" />
+    <result column="weixin_nickname" property="weixinNickname" jdbcType="VARCHAR" />
+    <result column="weixin_sex" property="weixinSex" jdbcType="INTEGER" />
+    <result column="weixin_country" property="weixinCountry" jdbcType="VARCHAR" />
+    <result column="weixin_province" property="weixinProvince" jdbcType="VARCHAR" />
+    <result column="weixin_city" property="weixinCity" jdbcType="VARCHAR" />
+    <result column="weixin_language" property="weixinLanguage" jdbcType="VARCHAR" />
+    <result column="weixin_head_img_url" property="weixinHeadImgUrl" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loginname, weixin_open_id, weixin_nickname, weixin_sex, weixin_country, weixin_province, 
+    weixin_city, weixin_language, weixin_head_img_url, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from weixin_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from weixin_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shtd.josh.domain.WeixinUser" useGeneratedKeys="true" keyProperty="id" >
+    insert into weixin_user (loginname, weixin_open_id, weixin_nickname, 
+      weixin_sex, weixin_country, weixin_province, 
+      weixin_city, weixin_language, weixin_head_img_url, 
+      create_date, modify_date)
+    values (#{loginname,jdbcType=VARCHAR}, #{weixinOpenId,jdbcType=VARCHAR}, #{weixinNickname,jdbcType=VARCHAR}, 
+      #{weixinSex,jdbcType=INTEGER}, #{weixinCountry,jdbcType=VARCHAR}, #{weixinProvince,jdbcType=VARCHAR}, 
+      #{weixinCity,jdbcType=VARCHAR}, #{weixinLanguage,jdbcType=VARCHAR}, #{weixinHeadImgUrl,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shtd.josh.domain.WeixinUser" useGeneratedKeys="true" keyProperty="id" >
+    insert into weixin_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="loginname != null" >
+        loginname,
+      </if>
+      <if test="weixinOpenId != null" >
+        weixin_open_id,
+      </if>
+      <if test="weixinNickname != null" >
+        weixin_nickname,
+      </if>
+      <if test="weixinSex != null" >
+        weixin_sex,
+      </if>
+      <if test="weixinCountry != null" >
+        weixin_country,
+      </if>
+      <if test="weixinProvince != null" >
+        weixin_province,
+      </if>
+      <if test="weixinCity != null" >
+        weixin_city,
+      </if>
+      <if test="weixinLanguage != null" >
+        weixin_language,
+      </if>
+      <if test="weixinHeadImgUrl != null" >
+        weixin_head_img_url,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinOpenId != null" >
+        #{weixinOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinNickname != null" >
+        #{weixinNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinSex != null" >
+        #{weixinSex,jdbcType=INTEGER},
+      </if>
+      <if test="weixinCountry != null" >
+        #{weixinCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinProvince != null" >
+        #{weixinProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinCity != null" >
+        #{weixinCity,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinLanguage != null" >
+        #{weixinLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinHeadImgUrl != null" >
+        #{weixinHeadImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shtd.josh.domain.WeixinUser" >
+    update weixin_user
+    <set >
+      <if test="loginname != null" >
+        loginname = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinOpenId != null" >
+        weixin_open_id = #{weixinOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinNickname != null" >
+        weixin_nickname = #{weixinNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinSex != null" >
+        weixin_sex = #{weixinSex,jdbcType=INTEGER},
+      </if>
+      <if test="weixinCountry != null" >
+        weixin_country = #{weixinCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinProvince != null" >
+        weixin_province = #{weixinProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinCity != null" >
+        weixin_city = #{weixinCity,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinLanguage != null" >
+        weixin_language = #{weixinLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinHeadImgUrl != null" >
+        weixin_head_img_url = #{weixinHeadImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shtd.josh.domain.WeixinUser" >
+    update weixin_user
+    set loginname = #{loginname,jdbcType=VARCHAR},
+      weixin_open_id = #{weixinOpenId,jdbcType=VARCHAR},
+      weixin_nickname = #{weixinNickname,jdbcType=VARCHAR},
+      weixin_sex = #{weixinSex,jdbcType=INTEGER},
+      weixin_country = #{weixinCountry,jdbcType=VARCHAR},
+      weixin_province = #{weixinProvince,jdbcType=VARCHAR},
+      weixin_city = #{weixinCity,jdbcType=VARCHAR},
+      weixin_language = #{weixinLanguage,jdbcType=VARCHAR},
+      weixin_head_img_url = #{weixinHeadImgUrl,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getWeixinUserByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM weixin_user
+    WHERE weixin_open_id = #{openId,jdbcType=VARCHAR}
+	ORDER BY id DESC
+	LIMIT 1    
+  </select>
+  <select id="deleteWeixinUserByOpenId" parameterType="java.lang.String">
+    delete from weixin_user
+    where weixin_open_id = #{openId,jdbcType=VARCHAR}
+  </select>  
+</mapper>

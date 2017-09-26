@@ -9,8 +9,26 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <import resource="classpath*:spring-service-bean.xml" />
+	<import resource="classpath*:spring-service-bean.xml" />
 
-  <util:properties id="wxProperties" location="classpath:/wx.properties" />
+	<util:properties id="wxProperties" location="classpath:/wx.properties" />
 
+	<!-- new add by Josh at 20170921 begin -->
+	
+    <!-- 配置Freemarker -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/pages/"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">0</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="number_format">0.##########</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="template_exception_handler">ignore</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- new add by Josh at 20170921 begin -->
 </beans>

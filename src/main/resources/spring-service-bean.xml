@@ -7,8 +7,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
   <context:component-scan base-package="com.github.binarywang.demo.spring">
-    <context:exclude-filter type="annotation"
-      expression="org.springframework.stereotype.Controller" />
+	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
   </context:component-scan>
 
   <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
@@ -25,5 +24,95 @@
       </list>
     </property>
   </bean>
+  
+  	<!-- new add by Josh at 20170921 begin -->
+  	
+	<!-- 读取 application.properties 配置文件 -->
+	<bean id="config"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>/WEB-INF/classes/db.properties</value>
+		</property>
+	</bean>
 
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="driverUrl">
+			<value>${db.driver_url}</value>
+		</property>
+		<property name="user" value="${db.user}" />
+		<property name="password" value="${db.pwd}" />
+		<property name="alias" value="${db.alias}" />
+		<property name="maximumActiveTime" value="${db.max_active_time}" />
+		<property name="prototypeCount" value="${db.prototype_count}" />
+		<property name="maximumConnectionCount" value="${db.max_connection_count}" />
+		<property name="minimumConnectionCount" value="${db.min_connection_count}" />
+		<property name="testBeforeUse" value="${db.test_before_use}" />
+		<property name="houseKeepingTestSql" value="${db.house_keeping_test_sql}" />
+	</bean>
+
+	<bean id="" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--dataSource属性指定要用到的连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!--configLocation属性指定mybatis的核心配置文件 -->
+		<property name="mapperLocations">
+		    <array>
+		      <value>classpath*:com/shtd/josh/**/*.xml</value>
+		    </array>
+		  </property>
+		<property name="typeAliasesPackage" value="com.shtd.josh.domain" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<!-- PROPAGATION_SUPPORTS: 如果已经存在事物，则加入事物；如果没有事物，则以非事物的方式执行； PROPAGATION_MANDATORY: 
+				使用当前事务，如果没有，则抛出异常； PROPAGATION_REQUIRED: 新建事物，如果当前有事物，则挂起； PROPAGATION_NOT_SUPPORTED: 
+				以非事物的方式执行，如果当前有事物，则挂起； PROPAGATION_NEVER: 以非事物的方式执行，如果当前有事物，则抛出异常； +/-Exception： 
+				+ 表示异常出现时事务提交； - 表示异常出现时事务回滚 -->
+			<props>
+				<prop key="get*">readOnly</prop>
+				<prop key="find*">readOnly</prop>
+				<prop key="del*"> PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="beanProxy"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<!-- 指定需要进行代理的类 -->
+			<value>*Server</value>
+		</property>
+
+		<!-- 对代理类 加载拦截器 （事先通知的过程） -->
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 指明 Mapper 位置 -->
+		<property name="basePackage" value="com.shtd.josh.dao" />
+	</bean>
+
+	<!-- Bean Mapper -->
+	<bean id="beanMapper" class="org.dozer.DozerBeanMapper" scope="singleton">
+		<property name="mappingFiles" value="mapper/dozer-bean-mappings.xml" />
+	</bean>  
+
+	<!-- new add by Josh at 20170921 end -->
 </beans>
